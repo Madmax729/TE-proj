@@ -1,10 +1,10 @@
-// import { useOAuth } from "@clerk/clerk-expo";
+import { useOAuth } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 import { Alert, Image, Text, View } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
-import { icons } from "@/constants";
-// import { googleOAuth } from "@/lib/auth";
+// import { icons } from "@/constants";
+import { googleOAuth } from "@/lib/auth";
 
 const OAuth = () => {
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
@@ -33,7 +33,7 @@ const OAuth = () => {
         className="mt-5 w-full shadow-none"
         IconLeft={() => (
           <Image
-            source={icons.google}
+            // source={icons.google}
             resizeMode="contain"
             className="w-5 h-5 mx-2"
           />
