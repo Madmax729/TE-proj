@@ -38,10 +38,10 @@ export default function HomePage() {
             animatedStyle,
           ]}
         >
-          <Text style={{ fontSize: 22, fontWeight: "bold", color: "#fff" }}>
+          <Text style={{ fontSize: 22, fontWeight: "bold", color: "#fff", marginTop: 30 }}>
             Welcome back, {user?.firstName || "User"}!
           </Text>
-          <Text style={{ fontSize: 16, color: "#e0f7fa", marginTop: 5 }}>
+          <Text style={{ fontSize: 16, color: "#e0f7fa", marginTop: 40 }}>
             "Every day may not be good, but there's something good in every day."
           </Text>
           <TouchableOpacity style={{ position: "absolute", top: 15, right: 15 }}>
@@ -64,28 +64,26 @@ export default function HomePage() {
               justifyContent: "space-between",
             }}
           >
-            <TouchableOpacity style={{ marginTop: 10 }}>
-              <Link href="/chat">
-                <View style={{ flex: 1, alignItems: "flex-start" }}>
-                  <Text style={{ fontSize: 20, fontWeight: "bold", color: "#192f6a" }}>
-                    1 on 1 Sessions
-                  </Text>
-                  <Text style={{ fontSize: 14, color: "#4c669f", marginTop: 5 }}>
-                    Let's open up to the things that matter the most.
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 22,
-                      fontWeight: "bold",
-                      color: "#FF7A00",
-                      marginTop: 10,
-                    }}
-                  >
-                    Talk it out <Ionicons name="logo-wechat" size={22} color="#FF7A00" />
-                  </Text>
-                </View>
-              </Link>
-            </TouchableOpacity>
+            <Link href="/chat">
+              <View style={{ flex: 1, alignItems: "flex-start" }}>
+                <Text style={{ fontSize: 20, fontWeight: "bold", color: "#192f6a" }}>
+                  1 on 1 Sessions
+                </Text>
+                <Text style={{ fontSize: 14, color: "#4c669f", marginTop: 5 }}>
+                  Let's open up to the things that matter the most.
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 22,
+                    fontWeight: "bold",
+                    color: "#FF7A00",
+                    marginTop: 10,
+                  }}
+                >
+                  Talk it out <Ionicons name="chatbubble-ellipses-outline" size={22} color="#FF7A00" />
+                </Text>
+              </View>
+            </Link>
             <View style={{ marginLeft: 10 }}>
               <Ionicons name="people-outline" size={40} color="#192f6a" />
             </View>
@@ -93,17 +91,18 @@ export default function HomePage() {
         </Animated.View>
 
         {/* Music & Motivational Videos */}
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
           <TouchableOpacity
             style={{
               flex: 1,
               padding: 15,
               borderRadius: 10,
-              backgroundColor: "#4c669f",
+              backgroundColor: "#192f6a",
               alignItems: "center",
               marginHorizontal: 5,
             }}
           >
+            <Ionicons name="musical-notes-outline" size={28} color="#fff" />
             <Text style={{ fontSize: 18, color: "#fff", fontWeight: "bold" }}>Music</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -116,9 +115,69 @@ export default function HomePage() {
               marginHorizontal: 5,
             }}
           >
+            <Ionicons name="videocam-outline" size={28} color="#fff" />
             <Text style={{ fontSize: 18, color: "#fff", fontWeight: "bold" }}>
               Motivational Videos
             </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Additional Sections */}
+        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              padding: 15,
+              borderRadius: 10,
+              backgroundColor: "#192f6a",
+              alignItems: "center",
+              marginHorizontal: 5,
+            }}
+          >
+            <Ionicons name="medical-outline" size={28} color="#fff" />
+            <Text style={{ fontSize: 18, color: "#fff", fontWeight: "bold" }}>Therapist</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              padding: 15,
+              borderRadius: 10,
+              backgroundColor: "#192f6a",
+              alignItems: "center",
+              marginHorizontal: 5,
+            }}
+          >
+            <Ionicons name="book-outline" size={28} color="#fff" />
+            <Text style={{ fontSize: 18, color: "#fff", fontWeight: "bold" }}>Courses for You</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              padding: 15,
+              borderRadius: 10,
+              backgroundColor: "#192f6a",
+              alignItems: "center",
+              marginHorizontal: 5,
+            }}
+          >
+            <Ionicons name="people-circle-outline" size={28} color="#fff" />
+            <Text style={{ fontSize: 18, color: "#fff", fontWeight: "bold" }}>Join Community</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              padding: 15,
+              borderRadius: 10,
+              backgroundColor: "#192f6a",
+              alignItems: "center",
+              marginHorizontal: 5,
+            }}
+          >
+            <Ionicons name="barbell-outline" size={28} color="#fff" />
+            <Text style={{ fontSize: 18, color: "#fff", fontWeight: "bold" }}>Exercises</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

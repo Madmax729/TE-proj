@@ -1,22 +1,14 @@
 import { Tabs } from "expo-router";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const { width } = Dimensions.get("window"); // Full screen width
-
-const TabIcon = ({
-  name,
-  focused,
-}: {
-  name: keyof typeof Ionicons.glyphMap;
-  focused: boolean;
-}) => (
+const TabIcon = ({ name, focused }) => (
   <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
     <Ionicons 
       name={name} 
-      size={34} // Increased for better visibility
-      color={focused ? "#00FFFF" : "#B0BEC5"} // Neon blue for active, light gray for inactive
-      style={focused ? styles.iconActiveShadow : styles.iconShadow} // Improved outline effect
+      size={30} 
+      color={focused ? "#00FFFF" : "#B0BEC5"} 
+      style={focused ? styles.iconActiveShadow : styles.iconShadow} 
     />
   </View>
 );
@@ -26,8 +18,8 @@ export default function Layout() {
     <Tabs
       initialRouteName="home"
       screenOptions={{
-        tabBarActiveTintColor: "#65a7de", // Neon blue for active
-        tabBarInactiveTintColor: "#B0BEC5", // Light gray for inactive
+        tabBarActiveTintColor: "#ffffff",
+        tabBarInactiveTintColor: "#B0BEC5",
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
       }}
@@ -37,15 +29,15 @@ export default function Layout() {
         options={{
           title: "Home",
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon name="home" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="home-outline" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="chat"
-        options={{
+        options={{  
           title: "Chat",
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon name="chatbubble" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="chatbubble-outline" focused={focused} />,
         }}
       />
       <Tabs.Screen
@@ -53,7 +45,7 @@ export default function Layout() {
         options={{
           title: "Profile",
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon name="person" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="person-outline" focused={focused} />,
         }}
       />
     </Tabs>
@@ -62,36 +54,36 @@ export default function Layout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    width: width - 20, // Slightly reduced width for better positioning
-    height: 64, // Increased height for better spacing
-    backgroundColor: "rgba(26, 55, 77, 0.95)", // Semi-transparent for better contrast
     position: "absolute",
-    bottom: 15, // Adjusted for better positioning
-    left: 10,
-    right: 10,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 64,
+    backgroundColor: "rgba(26, 55, 77, 0.95)",
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     shadowColor: "#000",
-    shadowOpacity: 0.3, // Stronger for visibility
+    shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 12,
   },
   iconWrapper: {
-    padding: 14,
-    borderRadius: 25,
+    padding: 12,
+    borderRadius: 20,
   },
   iconWrapperActive: {
-    backgroundColor: "rgba(0, 255, 255, 0.2)", // Light cyan glow for active tab
+    backgroundColor: "rgba(0, 255, 255, 0.2)",
   },
   iconShadow: {
-    textShadowColor: "rgba(0, 0, 0, 0.5)", // Shadow for inactive icons
+    textShadowColor: "rgba(0, 0, 0, 0.8)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 4,
   },
   iconActiveShadow: {
-    textShadowColor: "rgba(0, 255, 255, 0.9)", // Strong neon blue glow
+    textShadowColor: "rgba(0, 255, 255, 1)",
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 6,
   },
