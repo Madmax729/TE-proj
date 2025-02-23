@@ -14,9 +14,9 @@ const TabIcon = ({
   <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
     <Ionicons 
       name={name} 
-      size={30} // Slightly larger for better visibility
-      color={focused ? "#FFFFFF" : "#D3D3D3"} // Improved contrast for outline
-      style={styles.iconShadow} // Apply stroke effect
+      size={34} // Increased for better visibility
+      color={focused ? "#00FFFF" : "#B0BEC5"} // Neon blue for active, light gray for inactive
+      style={focused ? styles.iconActiveShadow : styles.iconShadow} // Improved outline effect
     />
   </View>
 );
@@ -26,8 +26,8 @@ export default function Layout() {
     <Tabs
       initialRouteName="home"
       screenOptions={{
-        tabBarActiveTintColor: "#FFFFFF",
-        tabBarInactiveTintColor: "#D3D3D3",
+        tabBarActiveTintColor: "#65a7de", // Neon blue for active
+        tabBarInactiveTintColor: "#B0BEC5", // Light gray for inactive
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
       }}
@@ -37,7 +37,7 @@ export default function Layout() {
         options={{
           title: "Home",
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon name="home-outline" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="home" focused={focused} />,
         }}
       />
       <Tabs.Screen
@@ -45,7 +45,7 @@ export default function Layout() {
         options={{
           title: "Chat",
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon name="chatbubble-outline" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="chatbubble" focused={focused} />,
         }}
       />
       <Tabs.Screen
@@ -53,7 +53,7 @@ export default function Layout() {
         options={{
           title: "Profile",
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon name="person-outline" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="person" focused={focused} />,
         }}
       />
     </Tabs>
@@ -62,33 +62,37 @@ export default function Layout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    width: width, // Full width
-    height: 58, // Reduced for minimalism
-    backgroundColor: "#1A374D", // Deep navy blue
+    width: width - 20, // Slightly reduced width for better positioning
+    height: 64, // Increased height for better spacing
+    backgroundColor: "rgba(26, 55, 77, 0.95)", // Semi-transparent for better contrast
     position: "absolute",
-    bottom: 10, // Prevents too low positioning
-    left: 0,
-    right: 0,
+    bottom: 15, // Adjusted for better positioning
+    left: 10,
+    right: 10,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    borderTopLeftRadius: 18,
-    borderTopRightRadius: 18,
+    borderRadius: 20,
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 8,
+    shadowOpacity: 0.3, // Stronger for visibility
+    shadowRadius: 10,
+    elevation: 12,
   },
   iconWrapper: {
-    padding: 10,
-    borderRadius: 15,
+    padding: 14,
+    borderRadius: 25,
   },
   iconWrapperActive: {
-    backgroundColor: "rgba(255, 255, 255, 0.12)", // Subtle glow for active tab
+    backgroundColor: "rgba(0, 255, 255, 0.2)", // Light cyan glow for active tab
   },
   iconShadow: {
-    textShadowColor: "rgba(0, 0, 0, 0.6)", // Black shadow to create an outline
+    textShadowColor: "rgba(0, 0, 0, 0.5)", // Shadow for inactive icons
     textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
+    textShadowRadius: 4,
+  },
+  iconActiveShadow: {
+    textShadowColor: "rgba(0, 255, 255, 0.9)", // Strong neon blue glow
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 6,
   },
 });
