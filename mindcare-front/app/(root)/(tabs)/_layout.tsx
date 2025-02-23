@@ -1,17 +1,10 @@
 import { Tabs } from "expo-router";
-import { Image, ImageSourcePropType, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-const TabIcon = ({
-  source,
-  focused,
-}: {
-  source: ImageSourcePropType;
-  focused: boolean;
-}) => (
-  <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
-    <View style={[styles.iconContainer, focused && styles.iconContainerActive]}>
-      <Image source={source} style={styles.icon} tintColor="white" resizeMode="contain" />
-    </View>
+const TabIcon = ({ name, focused }: { name: string; focused: boolean }) => (
+  <View style={[styles.iconContainer, focused && styles.iconContainerActive]}>
+    <Feather name={name} size={24} color={focused ? "#fff" : "#bbb"} />
   </View>
 );
 
@@ -20,57 +13,61 @@ export default function Layout() {
     <Tabs
       initialRouteName="home"
       screenOptions={{
-        tabBarActiveTintColor: "white",
-        tabBarInactiveTintColor: "white",
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
       }}
     >
-      <Tabs.Screen name="home" options={{ title: "Home", headerShown: false }} />
-      <Tabs.Screen name="chat" options={{ title: "Chat", headerShown: false }} />
-      <Tabs.Screen name="profile" options={{ title: "Profile", headerShown: false }} />
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: "Home",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon name="home" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: "Chat",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon name="message-circle" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon name="user" focused={focused} />,
+        }}
+      />
     </Tabs>
   );
 }
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: "white",
-    borderRadius: 50,
-    paddingBottom: 10,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    height: 60,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
     position: "absolute",
+    bottom: 0, // Slightly above the screen edge
+    left: 15,
+    right: 15,
+    height: 45, // Reduced height for a sleek look
+    backgroundColor: "#827E7E", // Dark gray for balance
+    borderRadius: 15,
+    borderTopWidth: 0,
+    elevation: 6, // Soft shadow effect
     shadowColor: "#000",
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.15,
     shadowRadius: 8,
-    elevation: 5,
-  },
-  iconWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 30,
-  },
-  iconWrapperActive: {
-    backgroundColor: "#3b6f7d",
   },
   iconContainer: {
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 25,
+    borderRadius: 22,
   },
   iconContainerActive: {
-    backgroundColor: "#4d8a9a",
-  },
-  icon: {
-    width: 28,
-    height: 28,
+    backgroundColor: "rgba(255, 255, 255, 0.15)", // Soft highlight on active tab
   },
 });

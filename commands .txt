@@ -5,3 +5,7 @@ npm install @clerk/types
 npm install expo-secure-store
 npm i framer-motion
 npm install moti
+npm i expo-linear-gradient
+npm install framer-motion moti
+ npm i lucide-react-native
+ npm i @expo/vector-icons
