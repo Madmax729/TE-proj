@@ -1,93 +1,186 @@
-import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Animated } from 'react-native';
-import { useSignUp } from '@clerk/clerk-expo';
-import { useRouter } from 'expo-router';
-import { useEffect, useRef } from 'react';
+import { useSignUp } from "@clerk/clerk-expo";
+import { Link, router } from "expo-router";
+import { useState } from "react";
+import { Alert, ScrollView, Text, View } from "react-native";
+import { ReactNativeModal } from "react-native-modal";
 
-export default function SignUpScreen() {
+import CustomButton from "@/components/CustomButton";
+import InputField from "@/components/InputField";
+import OAuth from "@/components/OAuth";
+
+const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
-  const router = useRouter();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const [emailAddress, setEmailAddress] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [pendingVerification, setPendingVerification] = React.useState(false);
-  const [code, setCode] = React.useState('');
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [verification, setVerification] = useState({
+    state: "default",
+    error: "",
+    code: "",
+  });
 
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
+  // Sign-up function
   const onSignUpPress = async () => {
-    if (!isLoaded) return;
+    if (!isLoaded) {
+      Alert.alert("Error", "Sign-up service is not loaded yet. Try again.");
+      return;
+    }
+
     try {
-      await signUp.create({ emailAddress, password });
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
-      setPendingVerification(true);
-    } catch (err) {
-      console.error(JSON.stringify(err, null, 2));
+      console.log("Creating user:", form.email);
+      await signUp.create({
+        emailAddress: form.email,
+        password: form.password,
+      });
+
+      console.log("Preparing email verification...");
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+
+      setVerification((prev) => ({
+        ...prev,
+        state: "pending",
+        error: "",
+      }));
+    } catch (err: any) {
+      console.error("Sign-up Error:", err);
+      Alert.alert("Error", err.errors?.[0]?.longMessage || "Sign-up failed.");
     }
   };
 
-  const onVerifyPress = async () => {
-    if (!isLoaded) return;
+  // Email Verification Function
+  const onPressVerify = async () => {
+    if (!isLoaded) {
+      Alert.alert("Error", "Verification service is not loaded yet. Try again.");
+      return;
+    }
+
     try {
-      const signUpAttempt = await signUp.attemptEmailAddressVerification({ code });
-      if (signUpAttempt.status === 'complete') {
-        await setActive({ session: signUpAttempt.createdSessionId });
-        router.replace('/');
+      console.log("Attempting verification with code:", verification.code);
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code: verification.code,
+      });
+
+      console.log("Verification Response:", completeSignUp);
+
+      if (completeSignUp.status === "complete") {
+        console.log("User verified! Setting session...");
+        await setActive({ session: completeSignUp.createdSessionId });
+
+        setVerification((prev) => ({
+          ...prev,
+          state: "success",
+          error: "",
+        }));
+
+        setShowSuccessModal(true);
       } else {
-        console.error(JSON.stringify(signUpAttempt, null, 2));
+        console.warn("Verification failed. Response:", completeSignUp);
+        setVerification((prev) => ({
+          ...prev,
+          error: "Verification failed. Please try again.",
+          state: "failed",
+        }));
       }
-    } catch (err) {
-      console.error(JSON.stringify(err, null, 2));
+    } catch (err: any) {
+      console.error("Verification Error:", err);
+      setVerification((prev) => ({
+        ...prev,
+        error: err.errors?.[0]?.longMessage || "An unknown error occurred.",
+        state: "failed",
+      }));
     }
   };
 
   return (
-    <Animated.View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f8f9fa', opacity: fadeAnim }}>
-      <View className="w-80 p-6 bg-white shadow-lg rounded-2xl">
-        {pendingVerification ? (
-          <>
-            <Text className="text-lg font-semibold text-gray-800 mb-4">Verify Your Email</Text>
-            <TextInput
-              value={code}
-              placeholder="Enter verification code"
-              onChangeText={setCode}
-              className="w-full p-3 border border-gray-300 rounded-lg mb-4 text-center"
+    <ScrollView className="flex-1 bg-white">
+      <View className="flex-1 bg-white">
+        <View className="relative w-full h-[250px]">
+          <Text className="text-2xl text-black font-JakartaSemiBold absolute bottom-5 left-5">
+            Create Your Account
+          </Text>
+        </View>
+        <View className="p-5">
+          <InputField
+            label="Name"
+            placeholder="Enter name"
+            value={form.name}
+            onChangeText={(value) => setForm({ ...form, name: value })}
+          />
+          <InputField
+            label="Email"
+            placeholder="Enter email"
+            textContentType="emailAddress"
+            value={form.email}
+            onChangeText={(value) => setForm({ ...form, email: value })}
+          />
+          <InputField
+            label="Password"
+            placeholder="Enter password"
+            secureTextEntry={true}
+            textContentType="password"
+            value={form.password}
+            onChangeText={(value) => setForm({ ...form, password: value })}
+          />
+          <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-6" />
+          <OAuth />
+          <Link href="/sign-in" className="text-lg text-center text-general-200 mt-10">
+            Already have an account? <Text className="text-primary-500">Log In</Text>
+          </Link>
+        </View>
+
+        {/* Verification Modal */}
+        <ReactNativeModal
+          isVisible={verification.state === "pending"}
+          onModalHide={() => {
+            if (verification.state === "success") {
+              setShowSuccessModal(true);
+            }
+          }}
+        >
+          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+            <Text className="font-JakartaExtraBold text-2xl mb-2">Verification</Text>
+            <Text className="font-Jakarta mb-5">
+              We've sent a verification code to {form.email}.
+            </Text>
+            <InputField
+              label={"Code"}
+              placeholder={"12345"}
+              value={verification.code}
+              keyboardType="numeric"
+              onChangeText={(code) => setVerification({ ...verification, code })}
             />
-            <TouchableOpacity className="bg-blue-500 py-3 rounded-lg shadow-md" onPress={onVerifyPress}>
-              <Text className="text-white text-center font-semibold">Verify</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <Text className="text-lg font-semibold text-gray-800 mb-4">Sign Up</Text>
-            <TextInput
-              autoCapitalize="none"
-              value={emailAddress}
-              placeholder="Enter email"
-              onChangeText={setEmailAddress}
-              className="w-full p-3 border border-gray-300 rounded-lg mb-4"
+            {verification.error && (
+              <Text className="text-red-500 text-sm mt-1">{verification.error}</Text>
+            )}
+            <CustomButton
+              title="Verify Email"
+              onPress={onPressVerify}
+              className="mt-5 bg-success-500"
             />
-            <TextInput
-              value={password}
-              placeholder="Enter password"
-              secureTextEntry
-              onChangeText={setPassword}
-              className="w-full p-3 border border-gray-300 rounded-lg mb-4"
+          </View>
+        </ReactNativeModal>
+
+        {/* Success Modal */}
+        <ReactNativeModal isVisible={showSuccessModal}>
+          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+            <Text className="text-3xl font-JakartaBold text-center">Verified</Text>
+            <Text className="text-base text-gray-400 font-Jakarta text-center mt-2">
+              You have successfully verified your account.
+            </Text>
+            <CustomButton
+              title="Browse Home"
+              onPress={() => router.push(`/(root)/(tabs)/home`)}
+              className="mt-5"
             />
-            <TouchableOpacity className="bg-blue-500 py-3 rounded-lg shadow-md" onPress={onSignUpPress}>
-              <Text className="text-white text-center font-semibold">Continue</Text>
-            </TouchableOpacity>
-          </>
-        )}
+          </View>
+        </ReactNativeModal>
       </View>
-    </Animated.View>
+    </ScrollView>
   );
-}
+};
+
+export default SignUp;
