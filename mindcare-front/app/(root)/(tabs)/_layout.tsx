@@ -1,17 +1,23 @@
 import { Tabs } from "expo-router";
-import { Image, ImageSourcePropType, View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+
+const { width } = Dimensions.get("window"); // Full screen width
 
 const TabIcon = ({
-  source,
+  name,
   focused,
 }: {
-  source: ImageSourcePropType;
+  name: keyof typeof Ionicons.glyphMap;
   focused: boolean;
 }) => (
   <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
-    <View style={[styles.iconContainer, focused && styles.iconContainerActive]}>
-      <Image source={source} style={styles.icon} tintColor="white" resizeMode="contain" />
-    </View>
+    <Ionicons 
+      name={name} 
+      size={30} // Slightly larger for better visibility
+      color={focused ? "#FFFFFF" : "#D3D3D3"} // Improved contrast for outline
+      style={styles.iconShadow} // Apply stroke effect
+    />
   </View>
 );
 
@@ -20,57 +26,69 @@ export default function Layout() {
     <Tabs
       initialRouteName="home"
       screenOptions={{
-        tabBarActiveTintColor: "white",
-        tabBarInactiveTintColor: "white",
+        tabBarActiveTintColor: "#FFFFFF",
+        tabBarInactiveTintColor: "#D3D3D3",
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
       }}
     >
-      <Tabs.Screen name="home" options={{ title: "Home", headerShown: false }} />
-      <Tabs.Screen name="chat" options={{ title: "Chat", headerShown: false }} />
-      <Tabs.Screen name="profile" options={{ title: "Profile", headerShown: false }} />
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: "Home",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon name="home-outline" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: "Chat",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon name="chatbubble-outline" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon name="person-outline" focused={focused} />,
+        }}
+      />
     </Tabs>
   );
 }
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: "white",
-    borderRadius: 50,
-    paddingBottom: 10,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    height: 60,
-    display: "flex",
+    width: width, // Full width
+    height: 58, // Reduced for minimalism
+    backgroundColor: "#1A374D", // Deep navy blue
+    position: "absolute",
+    bottom: 10, // Prevents too low positioning
+    left: 0,
+    right: 0,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    position: "absolute",
+    borderTopLeftRadius: 18,
+    borderTopRightRadius: 18,
     shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowRadius: 6,
+    elevation: 8,
   },
   iconWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 30,
+    padding: 10,
+    borderRadius: 15,
   },
   iconWrapperActive: {
-    backgroundColor: "#3b6f7d",
+    backgroundColor: "rgba(255, 255, 255, 0.12)", // Subtle glow for active tab
   },
-  iconContainer: {
-    width: 50,
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 25,
-  },
-  iconContainerActive: {
-    backgroundColor: "#FAF3E0",
-  },
-  icon: {
-    width: 28,
-    height: 28,
+  iconShadow: {
+    textShadowColor: "rgba(0, 0, 0, 0.6)", // Black shadow to create an outline
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
 });
