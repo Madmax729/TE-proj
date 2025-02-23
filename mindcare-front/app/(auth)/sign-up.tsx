@@ -45,7 +45,7 @@ const SignUp = () => {
         state: "pending",
         error: "",
       }));
-    } catch (err: any) {
+    } catch (err) {
       console.error("Sign-up Error:", err);
       Alert.alert("Error", err.errors?.[0]?.longMessage || "Sign-up failed.");
     }
@@ -85,7 +85,7 @@ const SignUp = () => {
           state: "failed",
         }));
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error("Verification Error:", err);
       setVerification((prev) => ({
         ...prev,
@@ -96,14 +96,12 @@ const SignUp = () => {
   };
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <View className="flex-1 bg-white">
-        <View className="relative w-full h-[250px]">
-          <Text className="text-2xl text-black font-JakartaSemiBold absolute bottom-5 left-5">
-            Create Your Account
-          </Text>
+    <ScrollView className="flex-1 bg-gradient-to-b from-blue-400 to-purple-600">
+      <View className="flex-1">
+        <View className="relative w-full h-[250px] flex justify-end px-5">
+          <Text className="  text-3xl text-black font-JakartaSemiBold mb-5">Create Your Account</Text>
         </View>
-        <View className="p-5">
+        <View className="p-5 bg-white rounded-t-3xl shadow-lg">
           <InputField
             label="Name"
             placeholder="Enter name"
@@ -125,15 +123,14 @@ const SignUp = () => {
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
-          <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-6" />
+          <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-6 bg-gradient-to-r from-green-400 to-blue-500" />
           <OAuth />
-          <Link href="/sign-in" className="text-lg text-center text-general-200 mt-10">
-            Already have an account? <Text className="text-primary-500">Log In</Text>
+          <Link href="/sign-in" className="text-lg text-center text-gray-300 mt-10">
+            Already have an account? <Text className="text-blue-600">Log In</Text>
           </Link>
         </View>
-
-        {/* Verification Modal */}
-        <ReactNativeModal
+         {/* Verification Modal */}
+         <ReactNativeModal
           isVisible={verification.state === "pending"}
           onModalHide={() => {
             if (verification.state === "success") {

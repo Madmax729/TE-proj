@@ -1,12 +1,11 @@
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import { useCallback, useState } from "react";
-import { Alert, Image, ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import OAuth from "@/components/OAuth";
-// import { icons, images } from "@/constants";
 
 const SignIn = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -29,31 +28,28 @@ const SignIn = () => {
         await setActive({ session: signInAttempt.createdSessionId });
         router.replace("/(root)/(tabs)/home");
       } else {
-        // See https://clerk.com/docs/custom-flows/error-handling for more info on error handling
         console.log(JSON.stringify(signInAttempt, null, 2));
         Alert.alert("Error", "Log in failed. Please try again.");
       }
-    } catch (err: any) {
+    } catch (err) {
       console.log(JSON.stringify(err, null, 2));
       Alert.alert("Error", err.errors[0].longMessage);
     }
   }, [isLoaded, form]);
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <View className="flex-1 bg-white">
-        <View className="relative w-full h-[250px]">
-          {/* <Image source={images.signUpCar} className="z-0 w-full h-[250px]" /> */}
-          <Text className="text-2xl text-black font-JakartaSemiBold absolute bottom-5 left-5">
+    <ScrollView className="flex-1 bg-gradient-to-b from-blue-400 to-purple-600">
+      <View className="flex-1">
+        <View className="relative w-full h-[250px] flex justify-end px-5">
+          <Text className="text-3xl text-black font-JakartaSemiBold mb-5">
             Welcome 👋
           </Text>
         </View>
 
-        <View className="p-5">
+        <View className="p-5 bg-white rounded-t-3xl shadow-lg">
           <InputField
             label="Email"
             placeholder="Enter email"
-            // icon={icons.email}
             textContentType="emailAddress"
             value={form.email}
             onChangeText={(value) => setForm({ ...form, email: value })}
@@ -62,7 +58,6 @@ const SignIn = () => {
           <InputField
             label="Password"
             placeholder="Enter password"
-            // icon={icons.lock}
             secureTextEntry={true}
             textContentType="password"
             value={form.password}
@@ -72,17 +67,13 @@ const SignIn = () => {
           <CustomButton
             title="Sign In"
             onPress={onSignInPress}
-            className="mt-6"
+            className="mt-6 bg-gradient-to-r from-green-400 to-blue-500"
           />
 
           <OAuth />
 
-          <Link
-            href="/sign-up"
-            className="text-lg text-center text-general-200 mt-10"
-          >
-            Don't have an account?{" "}
-            <Text className="text-primary-500">Sign Up</Text>
+          <Link href="/sign-up" className="text-lg text-center text-gray-300 mt-10">
+            Don't have an account? <Text className="text-blue-400">Sign Up</Text>
           </Link>
         </View>
       </View>
