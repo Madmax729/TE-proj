@@ -48,6 +48,14 @@ export default function Layout() {
           tabBarIcon: ({ focused }) => <TabIcon name="person-outline" focused={focused} />,
         }}
       />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon name="person-outline" focused={focused} />,
+        }}
+      />
     </Tabs>
   );
 }
