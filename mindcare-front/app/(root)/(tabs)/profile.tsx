@@ -1,4 +1,4 @@
-import { View, Text, TextInput, ScrollView, TouchableOpacity, Image, Alert, KeyboardAvoidingView, Platform } from "react-native";
+import { View, Text, TextInput, ScrollView, TouchableOpacity, Image, Alert } from "react-native";
 import { useState, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { MotiView } from "moti";
@@ -25,14 +25,10 @@ export default function ProfileScreen() {
   };
 
   const confirmSignOut = () => {
-    Alert.alert(
-      "Sign Out", 
-      "Are you sure you want to sign out?", 
-      [
-        { text: "Cancel", style: "cancel" },
-        { text: "Sign Out", style: "destructive", onPress: handleSignOut }
-      ]
-    );
+    Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "Sign Out", style: "destructive", onPress: handleSignOut }
+    ]);
   };
 
   const handleSignOut = async () => {
@@ -44,78 +40,108 @@ export default function ProfileScreen() {
     }
   };
 
+  const profileFields = [
+    { label: "Name", value: name, onChange: setName },
+    { label: "Email", value: email, onChange: setEmail },
+    { label: "Hobbies", value: hobbies, onChange: setHobbies },
+    { label: "Profession", value: profession, onChange: setProfession },
+    { label: "Location", value: location, onChange: setLocation },
+    { label: "Bio", value: bio, onChange: setBio, multiline: true },
+  ];
+
   return (
-    <LinearGradient colors={["#4c669f", "#11d7db", "#192f6a"]} style={{ flex: 1 }}>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
-        {/* Top Bar with Sign Out Button */}
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 20, paddingTop: 50 }}>
-          <Text style={{ color: "white", fontSize: 24, fontWeight: "bold" }}>Profile</Text>
-          <TouchableOpacity onPress={confirmSignOut} style={{ flexDirection: "row", alignItems: "center", padding: 5 }}>
+    <LinearGradient colors={["#4c669f", "#11d7db", "#192f6a"]} className="flex-1">
+      <View className="flex-1 pb-12">
+        {/* Header with Sign Out Button */}
+        <View className="flex-row justify-between items-center px-6 pt-12">
+          <Text className="text-white text-3xl font-bold">Profile</Text>
+          <TouchableOpacity onPress={confirmSignOut} className="flex-row items-center p-2">
             <Feather name="log-out" size={20} color="white" />
-            <Text style={{ color: "white", fontSize: 18, marginLeft: 5 }}>Sign Out</Text>
+            <Text className="text-white text-lg ml-2">Sign Out</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Profile Section */}
         <ScrollView
           ref={scrollViewRef}
-          style={{ flex: 1, paddingHorizontal: 20, paddingTop: 20 }}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          className="flex-1 p-6 pb-4"
+          contentContainerStyle={{ minHeight: "100%" }}
           onScroll={handleScroll}
           scrollEventThrottle={16}
         >
+          {/* Profile Header */}
           <MotiView
             from={{ opacity: 0, translateY: -50 }}
             animate={{ opacity: 1, translateY: 0 }}
             transition={{ type: "spring", stiffness: 100 }}
-            style={{ alignItems: "center", marginBottom: 20 }}
+            className="flex items-center mb-5"
           >
-            {/* Profile Avatar */}
-            <View style={{ width: 110, height: 110, borderRadius: 55, borderWidth: 3, borderColor: "#FFD700", justifyContent: "center", alignItems: "center", overflow: "hidden" }}>
-              <Image
-                source={{ uri: "https://via.placeholder.com/150" }} 
-                style={{ width: 100, height: 100, borderRadius: 50 }}
-              />
+            <View className="w-28 h-28 rounded-full border-4 border-yellow-500 flex items-center justify-center overflow-hidden">
+              <Image source={{ uri: "https://via.placeholder.com/150" }} className="w-24 h-24 rounded-full" />
             </View>
 
-            <Text style={{ fontSize: 24, fontWeight: "bold", color: "white", marginTop: 10 }}>Hello, {name.split(" ")[0]}!</Text>
-            <Text style={{ fontSize: 16, color: "lightgray" }}>Welcome to your profile</Text>
+            <Text className="text-3xl font-bold mt-4 text-white">Hello, {name.split(" ")[0]}!</Text>
+            <Text className="text-gray-200 text-lg">Welcome to your profile</Text>
           </MotiView>
 
           {/* Editable Fields */}
-          {[
-            { label: "Name", value: name, onChange: setName },
-            { label: "Email", value: email, onChange: setEmail },
-            { label: "Hobbies", value: hobbies, onChange: setHobbies },
-            { label: "Profession", value: profession, onChange: setProfession },
-            { label: "Location", value: location, onChange: setLocation },
-            { label: "Bio", value: bio, onChange: setBio, multiline: true },
-          ].map((field, index) => (
-            <View key={index} style={{ backgroundColor: "white", padding: 15, borderRadius: 10, shadowColor: "#000", shadowOpacity: 0.2, shadowRadius: 5, marginBottom: 15 }}>
-              <Text style={{ fontSize: 14, fontWeight: "600", color: "gray" }}>{field.label}</Text>
-              <TextInput
+          <MotiView
+            from={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="space-y-6"
+          >
+            {profileFields.map((field, index) => (
+              <ProfileField
+                key={field.label}
+                label={field.label}
                 value={field.value}
-                onChangeText={field.onChange}
+                onChange={field.onChange}
                 multiline={field.multiline}
-                style={{ fontSize: 16, color: "black", paddingVertical: 5 }}
-                placeholder={`Enter your ${field.label.toLowerCase()}`}
+                isLast={index === profileFields.length - 1}
               />
-            </View>
-          ))}
+            ))}
+          </MotiView>
         </ScrollView>
+      </View>
 
-        {/* Save Button - Appears when scrolled to bottom */}
-        {showButton && (
-          <View style={{ position: "absolute", bottom: 20, left: 0, right: 0, alignItems: "center" }}>
-            <TouchableOpacity style={{ width: "90%", borderRadius: 50, overflow: "hidden", shadowColor: "#000", shadowOpacity: 0.2, shadowRadius: 5 }}>
-              <LinearGradient colors={["#6a11cb", "#2575fc"]} style={{ paddingVertical: 12, alignItems: "center" }}>
-                <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>Save Changes</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        )}
-      </KeyboardAvoidingView>
+      {/* Save Button - Appears after full scroll */}
+      {showButton && (
+        <View className="absolute bottom-10 left-0 right-0 mb-5 flex items-center">
+          <TouchableOpacity className="w-11/12 rounded-full shadow-lg overflow-hidden">
+            <LinearGradient colors={["#6a11cb", "#2575fc"]} className="py-3 px-8 flex items-center">
+              <Text className="text-white font-bold text-lg">Save Changes</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      )}
     </LinearGradient>
   );
 }
-    
+
+const ProfileField = ({
+  label,
+  value,
+  onChange,
+  multiline = false,
+  isLast = false,
+}: {
+  label: string;
+  value: string;
+  onChange: (text: string) => void;
+  multiline?: boolean;
+  isLast?: boolean;
+}) => (
+  <View className={`bg-[#f8f8ff] p-3  rounded-xl shadow-md mt-2 border border-gray-300 ${isLast ? "mb-24" : ""}`}>
+    <Text className="text-gray-700 text-sm font-semibold">{label}</Text>
+    <View className="flex-row items-center mt-2">
+      <TextInput
+        value={value}
+        onChangeText={onChange}
+        multiline={multiline}
+        className="flex-1 text-lg text-gray-800"
+        placeholder={`Enter your ${label.toLowerCase()}`}
+      />
+      <Feather name="edit-3" size={18} color="gray" />
+    </View>
+  </View>
+);

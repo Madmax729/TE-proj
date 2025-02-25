@@ -5,28 +5,27 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
-    StyleSheet,
     KeyboardAvoidingView,
     Platform,
     TouchableWithoutFeedback,
     Keyboard,
+    Dimensions
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
+
+const { width } = Dimensions.get("window");
+const HISTORY_WIDTH = width * 0.7;
 
 const ChatScreen = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [historyVisible, setHistoryVisible] = useState(false);
 
-    const historyOffset = useSharedValue(-250); // Initially hidden
+    const historyOffset = useSharedValue(-HISTORY_WIDTH);
 
     const toggleHistory = () => {
-        if (historyVisible) {
-            historyOffset.value = withTiming(-250, { duration: 300 });
-        } else {
-            historyOffset.value = withTiming(0, { duration: 300 });
-        }
+        historyOffset.value = withTiming(historyVisible ? -HISTORY_WIDTH : 0, { duration: 300 });
         setHistoryVisible(!historyVisible);
     };
 
@@ -40,7 +39,7 @@ const ChatScreen = () => {
 
     const closeHistoryOnClick = () => {
         if (historyVisible) {
-            historyOffset.value = withTiming(-250, { duration: 300 });
+            historyOffset.value = withTiming(-HISTORY_WIDTH, { duration: 300 });
             setHistoryVisible(false);
         }
         Keyboard.dismiss();
@@ -48,45 +47,44 @@ const ChatScreen = () => {
 
     return (
         <TouchableWithoutFeedback onPress={closeHistoryOnClick}>
-            <SafeAreaView style={styles.container}>
-                <Animated.View style={[styles.historyPanel, { transform: [{ translateX: historyOffset }] }]}>
-                    <Text style={styles.historyTitle}>Chat History</Text>
-                    <ScrollView>
+            <SafeAreaView className="flex-1 bg-[#121212]">
+                <Animated.View
+                    style={{ transform: [{ translateX: historyOffset.value }], width: HISTORY_WIDTH }}
+                    className="absolute left-0 top-0 bottom-0 bg-[#1E1E1E] p-4 z-10 shadow-lg rounded-r-lg"
+                >
+                    <Text className="text-white text-lg font-semibold mb-3">Chat History</Text>
+                    <ScrollView className="space-y-2">
                         {messages.filter((msg) => msg.sender === "user").map((msg, index) => (
-                            <Text key={index} style={styles.historyItem}>{msg.text}</Text>
+                            <View key={index} className="bg-[#252525] p-2 rounded-md shadow-sm">
+                                <Text className="text-gray-300 text-sm">{msg.text}</Text>
+                            </View>
                         ))}
                     </ScrollView>
                 </Animated.View>
 
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={styles.chatContainer}
-                >
-                    <TouchableOpacity onPress={toggleHistory} style={styles.historyButton}>
-                        <Text style={styles.historyText}>☰</Text>
+                <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} className="flex-1 p-4 justify-between">
+                    <TouchableOpacity onPress={toggleHistory} className="absolute left-2 top-4 bg-[#252525] p-2 rounded">
+                        <Text className="text-gray-300 text-lg">☰</Text>
                     </TouchableOpacity>
 
-                    <ScrollView style={styles.messageContainer}>
+                    <ScrollView className="flex-1 mt-12 mb-2">
                         {messages.map((msg, index) => (
-                            <View
-                                key={index}
-                                style={[styles.messageBubble, msg.sender === "user" ? styles.userBubble : styles.botBubble]}
-                            >
-                                <Text style={styles.messageText}>{msg.text}</Text>
+                            <View key={index} className={`max-w-[75%] p-3 mb-2 rounded-lg ${msg.sender === "user" ? "bg-blue-600 self-end" : "bg-[#252525] self-start"}`}>
+                                <Text className="text-white">{msg.text}</Text>
                             </View>
                         ))}
                     </ScrollView>
 
-                    <View style={styles.inputContainer}>
+                    <View className="flex-row bg-[#1E1E1E] p-3 mb-8 rounded-lg shadow-md">
                         <TextInput
-                            style={styles.input}
+                            className="flex-1 text-white px-3"
                             placeholder="Type a message..."
-                            placeholderTextColor="#AAA"
+                            placeholderTextColor="#777"
                             value={input}
                             onChangeText={setInput}
                         />
-                        <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
-                            <Text style={styles.sendText}>➤</Text>
+                        <TouchableOpacity onPress={sendMessage} className="bg-blue-600 p-3 rounded-lg">
+                            <Text className="text-white text-lg">➤</Text>
                         </TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>
@@ -94,93 +92,5 @@ const ChatScreen = () => {
         </TouchableWithoutFeedback>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#1E1E2E",
-    },
-    chatContainer: {
-        flex: 1,
-        padding: 15,
-        justifyContent: "space-between",
-    },
-    historyButton: {
-        position: "absolute",
-        left: 10,
-        top: 30, // Adjusted to avoid the notch
-        zIndex: 10,
-        backgroundColor: "#3A3F5A",
-        padding: 10,
-        borderRadius: 5,
-    },
-    historyText: {
-        color: "#FFF",
-        fontSize: 18,
-    },
-    messageContainer: {
-        flex: 1,
-        marginTop: 60, // Avoid overlap with history button
-        marginBottom: 10,
-    },
-    messageBubble: {
-        maxWidth: "75%",
-        padding: 10,
-        marginBottom: 8,
-        borderRadius: 8,
-    },
-    userBubble: {
-        backgroundColor: "#4A90E2",
-        alignSelf: "flex-end",
-    },
-    botBubble: {
-        backgroundColor: "#44475A",
-        alignSelf: "flex-start",
-    },
-    messageText: {
-        color: "#FFF",
-    },
-    inputContainer: {
-        flexDirection: "row",
-        backgroundColor: "#22252A",
-        padding: 10,
-        borderRadius: 10,
-    },
-    input: {
-        flex: 1,
-        color: "#FFF",
-        paddingHorizontal: 10,
-    },
-    sendButton: {
-        backgroundColor: "#4A90E2",
-        padding: 10,
-        borderRadius: 8,
-    },
-    sendText: {
-        color: "#FFF",
-        fontSize: 16,
-    },
-    historyPanel: {
-        position: "absolute",
-        left: 0,
-        top: 30, // Adjusted to avoid notch
-        bottom: 0,
-        width: 250,
-        backgroundColor: "#3A3F5A",
-        padding: 15,
-        zIndex: 5,
-    },
-    historyTitle: {
-        color: "#FFF",
-        fontSize: 16,
-        fontWeight: "bold",
-        marginBottom: 10,
-    },
-    historyItem: {
-        color: "#AAA",
-        fontSize: 14,
-        marginBottom: 5,
-    },
-});
 
 export default ChatScreen;
