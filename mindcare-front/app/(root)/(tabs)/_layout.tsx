@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
     bottom: 0, // Slightly above the screen edge
     left: 15,
     right: 15,
-    height: 45, // Reduced height for a sleek look
-    backgroundColor: "#2a2a2a", // Dark gray for balance
-    borderRadius: 20,
+    height: 45, // Slightly increased for a modern feel
+    backgroundColor: "#F4EFCA", // Light background to match the theme
+    borderRadius: 5,
     borderTopWidth: 0,
     elevation: 6, // Soft shadow effect
     shadowColor: "#000",
@@ -66,13 +66,13 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   iconContainer: {
-    width: 45,
-    height: 45,
+    width: 50,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 22,
+    borderRadius: 25,
   },
   iconContainerActive: {
-    backgroundColor: "rgba(255, 255, 255, 0.15)", // Soft highlight on active tab
+    backgroundColor: "#F66345", // Highlight color for active tab
   },
 });

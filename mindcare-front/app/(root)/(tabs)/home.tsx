@@ -22,79 +22,77 @@ export default function HomePage() {
   const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
 
   return (
-    <LinearGradient colors={["#4c669f", "#11d7db", "#192f6a"]} className="flex-1 p-5">
-      <SafeAreaView className="flex-1">
+          <SafeAreaView className="flex-1  bg-orange-100">
         {/* Welcome Card */}
         <Animated.View
           style={animatedStyle}
-          className="min-h-[200px] p-5 rounded-lg bg-blue-900 mb-7 relative"
+          className="min-h-[200px] p-5 rounded-lg bg-[#F66345] mb-7 relative"
         >
-          <Text className="text-white text-xl font-bold mt-7">
+          <Text className="text-[#F4EFCA] text-xl font-bold mt-7">
             Welcome back, {user?.firstName || "User"}!
           </Text>
-          <Text className="text-cyan-100 text-base mt-5">
+          <Text className="text-[#F4EFCA] text-base mt-5">
             "Every day may not be good, but there's something good in every day."
           </Text>
           <TouchableOpacity className="absolute top-3 right-3">
             <Link href="/profile">
-              <Ionicons name="person-circle-outline" size={32} color="#fff" />
+              <Ionicons name="person-circle-outline" size={32} color="#F4EFCA" />
             </Link>
           </TouchableOpacity>
         </Animated.View>
 
         {/* 1-on-1 Sessions */}
         <Animated.View style={animatedStyle} className="items-center mb-5">
-          <TouchableOpacity className="w-full p-5 rounded-lg bg-cyan-400 flex-row justify-between items-center">
+          <TouchableOpacity className="w-full p-5 rounded-lg bg-[#F4EFCA] flex-row justify-between items-center">
             <Link href="/chat" className="flex-1">
               <View className="flex items-start">
-                <Text className="text-blue-900 text-lg font-bold">1 on 1 Sessions</Text>
-                <Text className="text-indigo-600 text-sm mt-1">
+                <Text className="text-[#F66345] text-lg font-bold">1 on 1 Sessions</Text>
+                <Text className="text-[#F66345] text-sm mt-1">
                   Let's open up to the things that matter the most.
                 </Text>
-                <Text className="text-orange-500 text-lg font-bold mt-2 flex items-center">
-                  Talk it out <Ionicons name="chatbubble-ellipses-outline" size={20} color="#FF7A00" />
+                <Text className="text-[#F66345] text-lg font-bold mt-2 flex items-center">
+                  Talk it out <Ionicons name="chatbubble-ellipses-outline" size={20} color="#F66345" />
                 </Text>
               </View>
             </Link>
-            <Ionicons name="people-outline" size={40} color="#192f6a" />
+            <Ionicons name="people-outline" size={40} color="#F66345" />
           </TouchableOpacity>
         </Animated.View>
 
         {/* Music & Motivational Videos */}
-        <View className="flex-row justify-between mb-5">
-          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-blue-900 items-center mx-1">
-            <Ionicons name="musical-notes-outline" size={28} color="#fff" />
-            <Text className="text-white text-lg font-bold">Music</Text>
+        <View className="flex-row justify-between mb-5 bg-orange-100">
+          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-[#F66345] items-center mx-1">
+            <Ionicons name="musical-notes-outline" size={28} color="#F4EFCA" />
+            <Text className="text-[#F4EFCA] text-lg font-bold">Music</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-blue-900 items-center mx-1">
-            <Ionicons name="videocam-outline" size={28} color="#fff" />
-            <Text className="text-white text-lg font-bold">Motivational Videos</Text>
+          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-[#F66345] items-center mx-1">
+            <Ionicons name="videocam-outline" size={28} color="#F4EFCA" />
+            <Text className="text-[#F4EFCA] text-lg font-bold">Motivational Videos</Text>
           </TouchableOpacity>
         </View>
 
         {/* Additional Sections */}
         <View className="flex-row justify-between mb-5">
-          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-blue-900 items-center mx-1">
-            <Ionicons name="medical-outline" size={28} color="#fff" />
-            <Text className="text-white text-lg font-bold">Therapist</Text>
+          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-[#F66345] items-center mx-1">
+            <Ionicons name="medical-outline" size={28} color="#F4EFCA" />
+            <Text className="text-[#F4EFCA] text-lg font-bold">Therapist</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-blue-900 items-center mx-1">
-            <Ionicons name="book-outline" size={28} color="#fff" />
-            <Text className="text-white text-lg font-bold">Courses for You</Text>
+          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-[#F66345] items-center mx-1">
+            <Ionicons name="book-outline" size={28} color="#F4EFCA" />
+            <Text className="text-[#F4EFCA] text-lg font-bold">Courses for You</Text>
           </TouchableOpacity>
         </View>
 
         <View className="flex-row justify-between mb-5">
-          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-blue-900 items-center mx-1">
-            <Ionicons name="people-circle-outline" size={28} color="#fff" />
-            <Text className="text-white text-lg font-bold">Join Community</Text>
+          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-[#F66345] items-center mx-1">
+            <Ionicons name="people-circle-outline" size={28} color="#F4EFCA" />
+            <Text className="text-[#F4EFCA] text-lg font-bold">Join Community</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-blue-900 items-center mx-1">
-            <Ionicons name="barbell-outline" size={28} color="#fff" />
-            <Text className="text-white text-lg font-bold">Exercises</Text>
+          <TouchableOpacity className="flex-1 p-4 rounded-lg bg-[#F66345] items-center mx-1">
+            <Ionicons name="barbell-outline" size={28} color="#F4EFCA" />
+            <Text className="text-[#F4EFCA] text-lg font-bold">Exercises</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </LinearGradient>
   );
 }

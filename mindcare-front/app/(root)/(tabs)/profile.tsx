@@ -39,6 +39,28 @@ export default function ProfileScreen() {
       console.error(JSON.stringify(err, null, 2));
     }
   };
+  const ProfileField = ({
+    label,
+    value,
+    onChange,
+    multiline = false,
+    isLast = false,
+  }) => (
+    <View className={`bg-orange-100 p-3 rounded-xl shadow-md mt-2 border border-gray-300 ${isLast ? "mb-24" : ""}`}>
+      <Text className="text-gray-700 text-sm font-semibold">{label}</Text>
+      <View className="flex-row items-center mt-2">
+        <TextInput
+          value={value}
+          onChangeText={onChange}
+          multiline={multiline}
+          className="flex-1 text-lg text-gray-800"
+          placeholder={`Enter your ${label.toLowerCase()}`}
+        />
+        <Feather name="edit-3" size={18} color="gray" />
+      </View>
+    </View>
+  );
+  
 
   const profileFields = [
     { label: "Name", value: name, onChange: setName },
@@ -50,9 +72,8 @@ export default function ProfileScreen() {
   ];
 
   return (
-    <LinearGradient colors={["#4c669f", "#11d7db", "#192f6a"]} className="flex-1">
+    <LinearGradient colors={["#F66345", "#FAF3DC"]} className="flex-1">
       <View className="flex-1 pb-12">
-        {/* Header with Sign Out Button */}
         <View className="flex-row justify-between items-center px-6 pt-12">
           <Text className="text-white text-3xl font-bold">Profile</Text>
           <TouchableOpacity onPress={confirmSignOut} className="flex-row items-center p-2">
@@ -68,22 +89,20 @@ export default function ProfileScreen() {
           onScroll={handleScroll}
           scrollEventThrottle={16}
         >
-          {/* Profile Header */}
           <MotiView
             from={{ opacity: 0, translateY: -50 }}
             animate={{ opacity: 1, translateY: 0 }}
             transition={{ type: "spring", stiffness: 100 }}
             className="flex items-center mb-5"
           >
-            <View className="w-28 h-28 rounded-full border-4 border-yellow-500 flex items-center justify-center overflow-hidden">
+            <View className="w-28 h-28 rounded-full border-4 border-white flex items-center justify-center overflow-hidden">
               <Image source={{ uri: "https://via.placeholder.com/150" }} className="w-24 h-24 rounded-full" />
             </View>
 
             <Text className="text-3xl font-bold mt-4 text-white">Hello, {name.split(" ")[0]}!</Text>
-            <Text className="text-gray-200 text-lg">Welcome to your profile</Text>
+            <Text className="text-white text-lg">Welcome to your profile</Text>
           </MotiView>
 
-          {/* Editable Fields */}
           <MotiView
             from={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -104,11 +123,10 @@ export default function ProfileScreen() {
         </ScrollView>
       </View>
 
-      {/* Save Button - Appears after full scroll */}
       {showButton && (
         <View className="absolute bottom-10 left-0 right-0 mb-5 flex items-center">
           <TouchableOpacity className="w-11/12 rounded-full shadow-lg overflow-hidden">
-            <LinearGradient colors={["#6a11cb", "#2575fc"]} className="py-3 px-8 flex items-center">
+            <LinearGradient colors={["#F66345", "#D9534F"]} className="py-3 px-8 flex items-center">
               <Text className="text-white font-bold text-lg">Save Changes</Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -117,31 +135,3 @@ export default function ProfileScreen() {
     </LinearGradient>
   );
 }
-
-const ProfileField = ({
-  label,
-  value,
-  onChange,
-  multiline = false,
-  isLast = false,
-}: {
-  label: string;
-  value: string;
-  onChange: (text: string) => void;
-  multiline?: boolean;
-  isLast?: boolean;
-}) => (
-  <View className={`bg-[#f8f8ff] p-3  rounded-xl shadow-md mt-2 border border-gray-300 ${isLast ? "mb-24" : ""}`}>
-    <Text className="text-gray-700 text-sm font-semibold">{label}</Text>
-    <View className="flex-row items-center mt-2">
-      <TextInput
-        value={value}
-        onChangeText={onChange}
-        multiline={multiline}
-        className="flex-1 text-lg text-gray-800"
-        placeholder={`Enter your ${label.toLowerCase()}`}
-      />
-      <Feather name="edit-3" size={18} color="gray" />
-    </View>
-  </View>
-);
