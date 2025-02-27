@@ -6,6 +6,7 @@ import { Alert, ScrollView, Text, View } from "react-native";
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import OAuth from "@/components/OAuth";
+import { ImageBackground } from "react-native";
 
 const SignIn = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -40,11 +41,18 @@ const SignIn = () => {
   return (
     <ScrollView className="flex-1 bg-gradient-to-b from-blue-400 to-purple-600">
       <View className="flex-1">
+      <ImageBackground
+    source={require("../../assets/images/bg1.jpg")}
+    className="w-full h-[250px] flex justify-end px-5"
+    resizeMode="cover"
+  >
         <View className="relative w-full h-[250px] flex justify-end px-5">
-          <Text className="text-3xl text-black font-JakartaSemiBold mb-5">
-            Welcome 👋
+          <Text className="text-4xl text-green-700 font-JakartaSemiBold mb-5">
+            Welcome back
           </Text>
         </View>
+
+        </ImageBackground>
 
         <View className="p-5 bg-white rounded-t-3xl shadow-lg">
           <InputField
@@ -67,13 +75,16 @@ const SignIn = () => {
           <CustomButton
             title="Sign In"
             onPress={onSignInPress}
-            className="mt-6 bg-gradient-to-r from-green-400 to-blue-500"
+            className="mt-6 bg-green-700"
+            
+          
+
           />
 
           <OAuth />
 
           <Link href="/sign-up" className="text-lg text-center text-gray-300 mt-10">
-            Don't have an account? <Text className="text-blue-400">Sign Up</Text>
+            Don't have an account? <Text className="text-green-500">Sign Up</Text>
           </Link>
         </View>
       </View>

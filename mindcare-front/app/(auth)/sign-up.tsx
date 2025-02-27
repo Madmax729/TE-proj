@@ -3,6 +3,9 @@ import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { ReactNativeModal } from "react-native-modal";
+import { ImageBackground } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+
 
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
@@ -98,10 +101,23 @@ const SignUp = () => {
   return (
     <ScrollView className="flex-1 bg-gradient-to-b from-blue-400 to-purple-600">
       <View className="flex-1">
-        <View className="relative w-full h-[250px] flex justify-end px-5">
-          <Text className="  text-3xl text-black font-JakartaSemiBold mb-5">Create Your Account</Text>
+      <ImageBackground
+    source={require("../../assets/images/bg1.jpg")}
+    className="w-full h-[250px] flex justify-end px-5"
+    resizeMode="cover"
+  >
+        <View className="relative w-full h-[250px] flex justify-end ">
+          <Text className="  text-4xl text-green-900 font-JakartaSemiBold mb-5">Create Your Account</Text>
         </View>
-        <View className="p-5 bg-white rounded-t-3xl shadow-lg">
+       </ImageBackground>
+       
+
+
+      
+
+       <View className="p-5 bg-white rounded-t-3xl shadow-lg">
+
+
           <InputField
             label="Name"
             placeholder="Enter name"
@@ -123,12 +139,15 @@ const SignUp = () => {
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
-          <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-6 bg-gradient-to-r from-green-400 to-blue-500" />
+          <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-6 bg-green-700" />
           <OAuth />
           <Link href="/sign-in" className="text-lg text-center text-gray-300 mt-10">
-            Already have an account? <Text className="text-blue-600">Log In</Text>
+            Already have an account? <Text className="text-green-600">Log In</Text>
           </Link>
         </View>
+
+
+
          {/* Verification Modal */}
          <ReactNativeModal
           isVisible={verification.state === "pending"}

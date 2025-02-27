@@ -8,9 +8,9 @@ export const onboarding = [
     },
     {
       id: 2,
-      title: "Let's go!",
+      title: "Calm yourself for mental health",
       description:
-        "Connect with Us Right from your home Via live chat",
+        "Calm yourself for mental health and also your mind from the problems that exist in the world. ",
     //   image: images.onboarding3,
     },
   ];

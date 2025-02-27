@@ -3,8 +3,8 @@ import { View, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import ChatScreen from "./ChatScreen";
+// import { createStackNavigator } from "@react-navigation/stack";
+// import ChatScreen from "./ChatScreen";
 
 const TabIcon = ({ name, focused }: { name: string; focused: boolean }) => (
   <View style={[styles.iconContainer, focused && styles.iconContainerActive]}>
