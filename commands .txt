@@ -9,3 +9,5 @@ npm i expo-linear-gradient
 npm install framer-motion motion
  npm i lucide-react-native
  npm i @expo/vector-icons
+ npm install expo-av
+npm install expo-router
