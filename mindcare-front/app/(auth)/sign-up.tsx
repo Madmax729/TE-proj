@@ -56,48 +56,43 @@ const SignUp = () => {
 
   // Email Verification Function
   const onPressVerify = async () => {
-    if (!isLoaded) {
-      Alert.alert("Error", "Verification service is not loaded yet. Try again.");
-      return;
-    }
-
+    if (!isLoaded) return;
     try {
-      console.log("Attempting verification with code:", verification.code);
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code: verification.code,
       });
-
-      console.log("Verification Response:", completeSignUp);
-
       if (completeSignUp.status === "complete") {
-        console.log("User verified! Setting session...");
+        // await fetchAPI("/(api)/user", {
+        //   method: "POST",
+        //   body: JSON.stringify({
+        //     name: form.name,
+        //     email: form.email,
+        //     clerkId: completeSignUp.createdUserId,
+        //   }),
+        // });
+
         await setActive({ session: completeSignUp.createdSessionId });
-
-        setVerification((prev) => ({
-          ...prev,
+        setVerification({
+          ...verification,
           state: "success",
-          error: "",
-        }));
-
-        setShowSuccessModal(true);
+        });
       } else {
-        console.warn("Verification failed. Response:", completeSignUp);
-        setVerification((prev) => ({
-          ...prev,
+        setVerification({
+          ...verification,
           error: "Verification failed. Please try again.",
           state: "failed",
-        }));
+        });
       }
-    } catch (err) {
-      console.error("Verification Error:", err);
-      setVerification((prev) => ({
-        ...prev,
-        error: err.errors?.[0]?.longMessage || "An unknown error occurred.",
+    } catch (err: any) {
+      // See https://clerk.com/docs/custom-flows/error-handling
+      // for more info on error handling
+      setVerification({
+        ...verification,
+        error: err.errors[0].longMessage,
         state: "failed",
-      }));
+      });
     }
   };
-
   return (
     <ScrollView className="flex-1 bg-gradient-to-b from-blue-400 to-purple-600">
       <View className="flex-1">
@@ -189,9 +184,13 @@ const SignUp = () => {
             </Text>
             <CustomButton
               title="Browse Home"
-              onPress={() => router.push(`/(root)/(tabs)/home`)}
+              onPress={() => {
+                setShowSuccessModal(false); // Close modal
+                router.push(`/(root)/(tabs)/home`); // Navigate to home
+              }}
               className="mt-5"
             />
+
           </View>
         </ReactNativeModal>
       </View>
