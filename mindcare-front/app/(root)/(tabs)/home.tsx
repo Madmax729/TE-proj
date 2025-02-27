@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image } from "react-native";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
+import MusicScreen from "@/app/pages/music";
 import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -14,6 +16,8 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function HomePage() {
   const { user } = useUser();
   const opacity = useSharedValue(0);
+const router = useRouter();
+
 
   useEffect(() => {
     opacity.value = withTiming(1, { duration: 1000, easing: Easing.out(Easing.exp) });
@@ -50,7 +54,7 @@ export default function HomePage() {
           </TouchableOpacity>
         </Animated.View> */}
          {/* 1-on-1 Sessions */}
-         <Animated.View style={animatedStyle} className="items-center  mt-8 mb-5">
+         <Animated.View style={animatedStyle} className="items-center ml-4 mr-4 mt-8 mb-5">
           <TouchableOpacity className="w-full p-5 rounded-lg bg-[#F4EFCA] flex-row justify-between items-center">
             <Link href="/chat" className="flex-1">
               <View className="flex items-start">
@@ -109,32 +113,33 @@ export default function HomePage() {
             <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5">
               <Image
                 source={require('../../../assets/images/community1.jpg')}
-                className="w-full h-28 rounded-lg"
-                resizeMode="cover"
+                className="w-full h-32 rounded-lg "
+                resizeMode="center"
               />
               <Text className="text-base font-bold mt-3">Join Community</Text>
               <Text className="text-sm text-gray-600">Guide</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5">
+            <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5" onPress={() => router.push("/pages/music")}>
               <Image
                source={require('../../../assets/images/music.jpeg')}
-                className="w-full h-28 rounded-lg object-contain"
+                className="w-full h-32 rounded-lg object-contain"
                 // resizeMode="cover"
               />
               <Text className="text-base font-bold mt-3">Relax Music</Text>
               <Text className="text-sm text-gray-600">Calm your mind </Text>
+              
             </TouchableOpacity>
 
             <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5">
               <Image
                 source={require('../../../assets/images/articles.jpg')}
-                className="w-full h-28 rounded-lg"
+                className="w-full h-28 rounded-lg object-contain"
                 resizeMode="cover"
 
               />
               <Text className="text-base font-bold mt-3">Articles</Text>
-              <Text className="text-sm text-gray-600">Read at your pace</Text>
+              <Text className="text-sm text-gray-600 ">Read at your pace</Text>
             </TouchableOpacity>
 
             
@@ -152,7 +157,7 @@ export default function HomePage() {
 
             <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5">
               <Image
-                source={require('../../../assets/images/exercises.jpg')}
+               source={require('../../../assets/images/quiz.jpg')}
                 className="w-full h-28 rounded-lg"
               />
               <Text className="text-base font-bold mt-3">Tests</Text>
@@ -162,7 +167,7 @@ export default function HomePage() {
 
             <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5">
               <Image
-                source={{ uri: "https://via.placeholder.com/150" }}
+                 source={require('../../../assets/images/doc.jpg')}
                 className="w-full h-28 rounded-lg"
               />
               <Text className="text-base font-bold mt-3">Therapist</Text>
