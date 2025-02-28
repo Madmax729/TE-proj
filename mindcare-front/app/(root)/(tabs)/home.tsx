@@ -168,7 +168,7 @@ const router = useRouter();
             </TouchableOpacity>
 
 
-            <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5">
+            <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5" onPress={() => router.push("/pages/therpaist")} >
               <Image
                  source={require('../../../assets/images/doc.jpg')}
                 className="w-full h-28 rounded-lg"
