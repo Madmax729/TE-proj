@@ -158,7 +158,7 @@ const router = useRouter();
             </TouchableOpacity>
 
 
-            <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5">
+            <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5" onPress={() => router.push("/pages/quiz")}>
               <Image
                source={require('../../../assets/images/quiz.jpg')}
                 className="w-full h-28 rounded-lg"
