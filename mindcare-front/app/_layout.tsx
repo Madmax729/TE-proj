@@ -14,6 +14,10 @@ import { tokenCache } from '@/lib/auth'
 import * as SecureStore from 'expo-secure-store'
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
 
+import { initializeApp } from '@react-native-firebase/app';
+import { getFirestore } from '@react-native-firebase/firestore'; // Import this if you're also using Firestore
+
+
 if (!publishableKey) {
   throw new Error(
     'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env',
