@@ -35,7 +35,7 @@ const Onboarding = () => {
           <View key={item.id} className="flex-1 relative">
             {/* Full-Screen Image */}
             <Image
-              source={require('../../assets/images/getStarted.jpg')}
+              source={require('../../assets/images/started.jpg')}
               className="absolute top-0 left-0 w-full h-full"
               resizeMode="cover"
             />

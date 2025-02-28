@@ -35,7 +35,7 @@ const SignIn = () => {
     } catch (err) {
       console.log(JSON.stringify(err, null, 2));
       Alert.alert("Error", err.errors[0].longMessage);
-    }
+    } 
   }, [isLoaded, form]);
 
   return (
@@ -87,7 +87,13 @@ const SignIn = () => {
             Don't have an account? <Text className="text-green-500">Sign Up</Text>
           </Link>
         </View>
+        <ImageBackground
+          source={require("../../assets/images/bg4.jpg")} // Replace with your image path
+          className="w-full h-40"
+          resizeMode="cover"
+        />
       </View>
+     
     </ScrollView>
   );
 };

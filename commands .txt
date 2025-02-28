@@ -8,11 +8,22 @@ npm install motion
 npm i expo-linear-gradient
 npm install framer-motion motion
  npm i lucide-react-native
+<<<<<<< HEAD
+ npm i @expo/vector-icons
+ npm install expo-av
+npm install expo-router
+=======
   npm i @expo/vector-icons
 npm install @react-native-firebase/app @react-native-firebase/firestore
+<<<<<<< HEAD
 npx expo install firebase
 expo install firebase
 npm i expo-av
 npm install @react-navigation/native
 npx expo install react-native-screens react-native-safe-area-context react-native-gesture-handler react-native-reanimated react-native-vector-icons react-native-svg
 npm install @react-navigation/stack
+=======
+>>>>>>> d2d530245b4d01ff85e9b8dbc5ef8152fd8e3796
+>>>>>>> 6bc2b518598edaa96ef8e7302f48096e3a375daa
+npm i react-native-vector-icons
+npm i react-icons
