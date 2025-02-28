@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image } from "react-native";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -12,6 +13,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function HomePage() {
+
+  const navigation = useNavigation();
   const { user } = useUser();
   const opacity = useSharedValue(0);
 
@@ -116,7 +119,7 @@ export default function HomePage() {
               <Text className="text-sm text-gray-600">Guide</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5">
+            <TouchableOpacity className="w-[48%] bg-gray-100 rounded-lg p-4 mb-5" >
               <Image
                source={require('../../../assets/images/music.jpeg')}
                 className="w-full h-28 rounded-lg object-contain"

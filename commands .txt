@@ -10,3 +10,9 @@ npm install framer-motion motion
  npm i lucide-react-native
   npm i @expo/vector-icons
 npm install @react-native-firebase/app @react-native-firebase/firestore
+npx expo install firebase
+expo install firebase
+npm i expo-av
+npm install @react-navigation/native
+npx expo install react-native-screens react-native-safe-area-context react-native-gesture-handler react-native-reanimated react-native-vector-icons react-native-svg
+npm install @react-navigation/stack

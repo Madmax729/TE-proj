@@ -46,6 +46,7 @@ export default function Layout() {
           tabBarIcon: ({ focused }) => <TabIcon name="user" focused={focused} />,
         }}
       />
+      
     </Tabs>
   );
 }
