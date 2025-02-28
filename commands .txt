@@ -27,3 +27,5 @@ npm install @react-navigation/stack
 >>>>>>> 6bc2b518598edaa96ef8e7302f48096e3a375daa
 npm i react-native-vector-icons
 npm i react-icons
+npm i tailwind-rn
+react-native-paper
