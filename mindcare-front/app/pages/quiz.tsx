@@ -4,7 +4,9 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import anxietyQuizData from "../../data/anxietyquiz.json";
 import ocdQuizData from "../../data/ocdquiz.json";
 import depressionQuizData from "../../data/depressionquiz.json";
-//hiii
+import { Stack } from "expo-router"; 
+import { ImageBackground } from "react-native";
+
 const quizOptions = [
   { title: "Anxiety Quiz", key: "anxiety" },
   { title: "Depression Quiz", key: "depression" },
@@ -19,14 +21,20 @@ export default function QuizApp() {
   };
 
   return (
-    <View className="flex-1 bg-gray-100 p-5">
+    <ImageBackground
+    source={require("../../assets/images/q1.jpg")}
+    className="w-full h-full flex justify-end px-5"
+    resizeMode="cover"
+  >
+    <View className="flex-1 bg-gray-100 p-10 mt-8 ">
+       <Stack.Screen options={{ headerShown: false }} />
       {!selectedQuiz ? (
         <ScrollView>
           <Text className="text-3xl font-bold text-center mb-6">Select a Quiz</Text>
           {quizOptions.map((quiz) => (
             <TouchableOpacity
               key={quiz.key}
-              className="bg-blue-500 p-4 mb-4 rounded-lg shadow-md"
+              className="bg-black p-4 mb-4 rounded-lg shadow-md"
               onPress={() => handleQuizSelection(quiz.key)}
             >
               <Text className="text-white text-center text-lg font-semibold">
@@ -39,6 +47,7 @@ export default function QuizApp() {
         <QuizComponent quizKey={selectedQuiz} onRestart={() => setSelectedQuiz(null)} />
       )}
     </View>
+    </ImageBackground>
   );
 }
 

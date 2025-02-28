@@ -50,7 +50,7 @@ const AnxietyDepressionData = () => {
             </TouchableOpacity>
       
       <Text className="text-xl font-bold mb-4 text-gray-800">Anxiety & Depression Data</Text>
-      <FlatList
+      {/* <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
@@ -59,7 +59,10 @@ const AnxietyDepressionData = () => {
             <Text className="text-md text-gray-600">Value: {item.value}</Text>
           </View>
         )}
-      />
+      /> */}
+      <View className='h-full'>
+        <Text className="text-gray-500 text-center justify-center align-middle mt-5">Comming Soon</Text>
+      </View>
     </View>
   );
 };

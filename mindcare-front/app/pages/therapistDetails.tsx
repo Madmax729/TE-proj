@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert, Linking } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import therapistsData from "../../components/therapistData"; // Ensure correct path
 
 export default function TherapistDetails() {
-  const { id } = useLocalSearchParams(); // Get therapist ID from URL params
+  const { id } = useLocalSearchParams();
   const router = useRouter();
 
   // Find the therapist by ID
@@ -20,6 +20,18 @@ export default function TherapistDetails() {
       </View>
     );
   }
+
+  // Handle call action
+  const handleContactClinic = () => {
+    Alert.alert(
+      "Contact Clinic",
+      `Do you want to call ${therapist.name}'s clinic?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Call", onPress: () => Linking.openURL(`tel:${therapist.contact}`) },
+      ]
+    );
+  };
 
   return (
     <View className="flex-1 p-6 bg-white">
@@ -47,6 +59,18 @@ export default function TherapistDetails() {
       {/* Availability */}
       <Text className="text-lg font-bold mt-4">🗓 Availability:</Text>
       <Text className="text-gray-700">{therapist.available}</Text>
+
+      {/* Full Description */}
+      <Text className="text-lg font-bold mt-4">📖 About:</Text>
+      <Text className="text-gray-700">{therapist.description}</Text>
+
+      {/* Contact Button */}
+      <TouchableOpacity
+        onPress={handleContactClinic}
+        className="mt-6 bg-blue-600 px-4 py-2 rounded-full items-center"
+      >
+        <Text className="text-white font-semibold text-lg">📞 Contact Clinic</Text>
+      </TouchableOpacity>
     </View>
   );
 }

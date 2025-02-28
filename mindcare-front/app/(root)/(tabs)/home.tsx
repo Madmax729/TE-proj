@@ -58,19 +58,19 @@ const router = useRouter();
         </Animated.View> */}
          {/* 1-on-1 Sessions */}
          <Animated.View style={animatedStyle} className="items-center ml-4 mr-4 mt-8 mb-5">
-          <TouchableOpacity className="w-full p-5 rounded-lg bg-[#F4EFCA] flex-row justify-between items-center">
+          <TouchableOpacity className="w-full p-5 rounded-lg bg-[#EFDFBB] flex-row justify-between items-center">
             <Link href="/chat" className="flex-1">
               <View className="flex items-start">
-                <Text className="text-[#F66345] text-lg font-bold">1 on 1 Sessions</Text>
-                <Text className="text-[#F66345] text-sm mt-1">
+                <Text className="text-[#722F37] text-lg font-bold">1 on 1 Sessions</Text>
+                <Text className="text-[#722F37] text-sm mt-1">
                   Let's open up to the things that matter the most.
                 </Text>
-                <Text className="text-[#F66345] text-lg font-bold mt-2 flex items-center">
-                  Talk it out <Ionicons name="chatbubble-ellipses-outline" size={20} color="#F66345" />
+                <Text className="text-[#722F37] text-lg font-bold mt-2 flex items-center">
+                  Talk it out <Ionicons name="chatbubble-ellipses-outline" size={20} color="#722F37" />
                 </Text>
               </View>
             </Link>
-            <Ionicons name="people-outline" size={40} color="#F66345" />
+            <Ionicons name="people-outline" size={40} color="#722F37" />
           </TouchableOpacity>
         </Animated.View>
 

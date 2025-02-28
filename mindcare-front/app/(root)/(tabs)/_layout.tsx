@@ -54,11 +54,11 @@ export default function Layout() {
 const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
-    bottom: 0, // Slightly above the screen edge
+    bottom: 5, // Slightly above the screen edge
     left: 15,
     right: 15,
     height: 45, // Slightly increased for a modern feel
-    backgroundColor: "#F4EFCA", // Light background to match the theme
+    backgroundColor: "#EAE0C8", // Light background to match the theme
     borderRadius: 5,
     borderTopWidth: 0,
     elevation: 6, // Soft shadow effect
@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   iconContainer: {
-    width: 50,
-    height: 50,
+    width: 35,
+    height: 35,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 25,
   },
   iconContainerActive: {
-    backgroundColor: "#F66345", // Highlight color for active tab
+    backgroundColor: "#262424", // Highlight color for active tab
   },
 });

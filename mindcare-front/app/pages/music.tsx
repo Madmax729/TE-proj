@@ -4,6 +4,7 @@ import { Audio } from "expo-av";
 import { useRouter } from "expo-router";
 const API_URL = "https://api.deezer.com/chart"; // Replace with your preferred music API
 import { Stack } from "expo-router"; 
+import { ImageBackground } from "react-native";
 
 const MusicScreen = () => {
   const router = useRouter();
@@ -68,18 +69,42 @@ const MusicScreen = () => {
   };
 
   return (
-    <View className="flex-1 bg-white p-5">
-      <TouchableOpacity onPress={() => router.back()}>
-              <Text style={{ fontSize: 20, fontWeight: "bold", color: "#333" }}>←</Text>
-            </TouchableOpacity>
-      <Text className="text-2xl font-bold text-center mt-10 mb-5">Calm your mind</Text>
-       <Stack.Screen options={{ headerShown: false }} />
+    <View className="flex-1 bg-white px-5">
+      <View className="-mx-5">
+      <ImageBackground
+      source={require("../../assets/images/musicbg.jpg")}
+      className="w-full h-[150px] justify-center items-center"
+      resizeMode="cover"
+    >
+      {/* Back Button */}
+      <TouchableOpacity
+        onPress={() => router.back()}
+        style={{
+          position: "absolute",
+          top: 20,
+          left: 15,
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          padding: 8,
+          borderRadius: 5,
+        }}
+      >
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: "#333" }}>←</Text>
+      </TouchableOpacity>
+
+      {/* Text Overlay */}
+      <View className="absolute top-1/2 left-0 right-0 items-center">
+        <Text className="text-2xl font-bold text-white">Calm your mind</Text>
+      </View>
+
+      <Stack.Screen options={{ headerShown: false }} />
+    </ImageBackground>
+      </View>
       {/* Header */}
       <Text className="text-white text-2xl font-bold mb-5 text-center">Music</Text>
 
       {/* Search Bar */}
       <TextInput
-        className="bg-gray-800 text-white p-3 rounded-lg mb-5"
+        className="bg-blue-50 text-white p-3 rounded-lg mb-5"
         placeholder="Search for songs..."
         placeholderTextColor="#aaa"
         value={search}
