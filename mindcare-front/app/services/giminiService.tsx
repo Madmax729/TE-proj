@@ -6,9 +6,9 @@
 // //   ? 'your_dev_key' 
 // //   : 'your_prod_key';
 
-// // Method 2: From app.config.js (recommended)
-// import Constants from 'expo-constants';
-// const API_KEY = Constants.expoConfig?.extra?.geminiApiKey;
+// Method 2: From app.config.js (recommended)
+import Constants from 'expo-constants';
+const API_KEY = Constants.expoConfig?.extra?.geminiApiKey;
 
 // if (!API_KEY) {
 //   throw new Error("Missing Gemini API Key configuration");
@@ -30,14 +30,15 @@
 // // Store conversation history
 // let chatHistory: ChatMessage[] = [];
 
-// export const getChatbotResponse = async (userMessage: string): Promise<string> => {
-//   try {
-//     const model = genAI.getGenerativeModel({ 
-//       model: "gemini-pro",
-//       generationConfig: {
-//         maxOutputTokens: 200,
-//       },
-//     });
+export const getChatbotResponse = async (userMessage: string): Promise<string> => {
+  try {
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-pro",
+      generationConfig: {
+        maxOutputTokens: 200,
+      },
+    });
+}}
 
 //     // Start chat with history
 //     const chat = model.startChat({
@@ -70,4 +71,4 @@
 
 // export const clearChatHistory = (): void => {
 //   chatHistory = [];
-// };r
+// };
