@@ -12,7 +12,12 @@ import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo'
 import { Slot } from 'expo-router'
 import { tokenCache } from '@/lib/auth'
 import * as SecureStore from 'expo-secure-store'
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
+import Constants from 'expo-constants';
+// const publishableKey = Constants.expoConfig?.extra?.expoKey;
+const publishableKey = "pk_test_aGFuZHktdGVybWl0ZS02OC5jbGVyay5hY2NvdW50cy5kZXYk";
+
+// const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+
 
 if (!publishableKey) {
   throw new Error(
