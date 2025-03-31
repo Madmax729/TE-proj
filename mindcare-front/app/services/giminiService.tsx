@@ -8,7 +8,9 @@ import * as Application from 'expo-application';
 
 // Method 2: From app.config.js (recommended)
 import Constants from 'expo-constants';
-const API_KEY = Constants.expoConfig?.extra?.geminiApiKey;
+// const API_KEY = Constants.expoConfig?.extra?.geminiApiKey;
+const API_KEY = "AIzaSyDhYsH_VveegB0tkXDvLw9ukdxU2xBp1UI";
+
 
 if (!API_KEY) {
   throw new Error("Missing Gemini API Key configuration");
@@ -33,7 +35,7 @@ let chatHistory: ChatMessage[] = [];
 export const getChatbotResponse = async (userMessage: string): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-pro",
+      model: "gemini-1.5-flash",
       generationConfig: {
         maxOutputTokens: 200,
       },
